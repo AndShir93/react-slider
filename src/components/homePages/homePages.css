@@ -1,0 +1,13 @@
+.home-pages__title{
+    text-align: center;
+}
+.home-pages__button{
+    display: flex;
+    justify-content: center;
+    line-height: 34px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 0 auto;
+}

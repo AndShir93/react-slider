@@ -1,0 +1,15 @@
+.main-menu{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.main-menu-list{
+  height: 100px;
+  list-style-type: none;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.main-menu-list__item{
+  display: inline-block;
+}
