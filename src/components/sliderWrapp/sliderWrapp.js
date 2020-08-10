@@ -7,15 +7,18 @@ let i = 0;
 class SliderWrapp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { image: arr[i] };
-    this.next = this.next.bind(this);
-    this.prev = this.prev.bind(this);
+    this.state = {
+      image: './images/2.jpg'
+    };
   }
 
   componentDidMount() {
-    this.slider();
+    this.slider()
   }
 
+  componentWillUnmount(){
+    clearInterval(this.idInterval)
+  }
   slider() {
     this.idInterval = setInterval(() => this.next(), 3000);
   }
