@@ -1,68 +1,53 @@
 import React from "react";
 import "./sliderWrapper.css";
-
-let arr = ["./images/1.jpg", "./images/2.jpg", "./images/3.jpg"];
-let i = 0;
+import { connect } from 'react-redux';
+import { nextImage, prevImage, localSlider } from "../../redux/actions";
 
 class SliderWrapp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: './images/2.jpg'
-    };
+
+  nextImage() {
+    let { image } = this.props;
+    this.props.nextImage(image)
   }
 
-  componentDidMount() {
-    this.slider()
+  prevImage(){
+    let { image } = this.props;
+    this.props.prevImage(image)
   }
-
-  componentWillUnmount(){
-    clearInterval(this.idInterval)
-  }
-  slider() {
-    this.idInterval = setInterval(() => this.next(), 3000);
-  }
-
-  next() {
-    if (i < arr.length - 1) {
-      i++;
-      this.setState({ image: arr[i] });
-    } else {
-      this.setState({ image: arr[0] });
-      i = 0;
-    }
-    clearInterval(this.idInterval);
-    this.slider();
-  }
-  prev() {
-    if (i >= 1) {
-      i--;
-      this.setState({
-        image: arr[i],
-      });
-    } else {
-      this.setState({
-        image: arr[arr.length - 1],
-      });
-      i = arr.length - 1;
-    }
-    clearInterval(this.idInterval);
-    this.slider();
+  localSlider(){
+    let { typeSlider } = this.props;
+    this.props.localSlider(typeSlider)
   }
 
   render() {
     return (
       <div>
         <div className="slider__wrapper">
-          <img className="slider__images" src={this.state.image} />
+          <img className="slider__images" src={this.props.image} />
         </div>
         <div className="btn-wrapper">
-          <button onClick={this.prev}>-</button>
-          <button onClick={this.next}>+</button>
+          <button onClick={() => this.prevImage()}>-</button>
+          <button onClick={() => this.localSlider()}>Переход</button>
+          <button onClick={() => this.nextImage()}>+</button>
         </div>
       </div>
     );
   }
 }
 
-export default SliderWrapp;
+const mapStateToProps = (state) => ({
+  image: state.image
+})
+const mapDispatchToProps = (dispatch) => ({
+  nextImage(image){
+    dispatch(nextImage(image))
+  },
+  prevImage(image){
+    dispatch(prevImage(image))
+  },
+  localSlider(image){
+    dispatch(localSlider(image))
+  }
+})
+
+export default connect (mapStateToProps, mapDispatchToProps)(SliderWrapp)

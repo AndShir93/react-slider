@@ -7,9 +7,8 @@ import reducers from './redux/reducers';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-console.log(createStore);
 
-const store = createStore(reducers, initialState);
+const store = createStore(reducers, initialState());
 
 const Wrapper = () =>(
   <Provider store={store}>
@@ -17,7 +16,7 @@ const Wrapper = () =>(
   </Provider>
 )
 
-ReactDOM.render(() => Wrapper, document.getElementById('root'));
+ReactDOM.render(<Wrapper />, document.getElementById('root'));
 
 // ReactDOM.render(
 //   <React.StrictMode>
