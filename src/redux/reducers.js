@@ -1,51 +1,22 @@
 import * as actionTypes from './actionTypes'
-import initialState from './initialState'
-let i = 0
 
-export default (state, action) => {
-
-    function slide(){
-        if(state.typeSlider){
-            switch (i){
-                case -1:
-                    i = 2
-                    return initialState().localImages[i];
-                    break;
-                case 2:
-                    i = 0
-                    return initialState().localImages[i];
-                    break;
-                default:
-                    i = i+1;
-                    return initialState().localImages[i]
-            }
-        }else{
-            switch (i){
-            case -1:
-                i = 2
-                return initialState().remoteImages[i];
-                break;
-            case 2:
-                i = 0
-                return initialState().remoteImages[i];
-                break;
-            default:
-                i = i+1;
-                return initialState().remoteImages[i]
-            }
-        }
-    }
+export default (state = [], action) => {
 
     switch(action.type){
         case actionTypes.NEXT_IMG: {
-            return {...state, image: slide()}
+            return Object.assign({},state, {
+                current: action.current
+            })
         }
         case actionTypes.PREV_IMG: {
-            return {...state, image: slide()}
+            return Object.assign({},state, {
+                current: action.current
+            })
         }
-        case actionTypes.LOCAL_SLIDER: {
-            console.log(state.typeSlider)
-            return {...state, typeSlider: !state.typeSlider}
+        case actionTypes.SET_IS_LOCAL: {
+            return Object.assign({},state, {
+                isLocal: action.isLocal
+            })
         }
         default:
             return state
