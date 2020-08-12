@@ -1,34 +1,28 @@
 import React from "react";
 import "./sliderWrapper.css";
 import { connect } from 'react-redux';
-import { nextImage, prevImage, localSlider } from "../../redux/actions";
+import { setCurrent, localSlider } from "../../redux/actions";
 
 class SliderWrapp extends React.Component {
 
-  next() {
-    let { current } = this.props;
-    if(current === this.props.localImages.length - 1){
+  
+
+  setCurrent(){
+    let { current } = this.props
+    let count = () => this.props.isLocal?this.props.localImages.length-1:this.props.remoteImages.length-1
+    if(current >= count()){
       current = 0
     }else{
       current++
     }
-    this.props.nextImage(current)
-  }
-
-  prev(){
-    let { current } = this.props;
-    if(current === 0){
-      current = this.props.localImages.length - 1
-    }else{
-      current--
-    }
-    this.props.nextImage(current)
+    this.props.setCurrent(current)
   }
 
   localSlider(){
-    let { isLocal } = this.props
+    let { isLocal, current } = this.props
+    current = 0
     isLocal = !isLocal
-    this.props.localSlider(isLocal)
+    this.props.localSlider(isLocal, current)
   }
 
   render() {
@@ -38,9 +32,9 @@ class SliderWrapp extends React.Component {
           <img className="slider__images" src={this.props[this.props.isLocal?'localImages':'remoteImages'][this.props.current]} />
         </div>
         <div className="btn-wrapper">
-          <button onClick={() => this.prev()}>-</button>
+          <button onClick={() => this.setCurrent()}>-</button>
           <button onClick={() => this.localSlider()}>Переход</button>
-          <button onClick={() => this.next()}>+</button>
+          <button onClick={() => this.setCurrent()}>+</button>
         </div>
       </div>
     );
@@ -54,14 +48,11 @@ const mapStateToProps = (state) => ({
   remoteImages: state.remoteImages
 })
 const mapDispatchToProps = (dispatch) => ({
-  nextImage(current){
-    dispatch(nextImage(current))
+  setCurrent(current){
+    dispatch(setCurrent(current))
   },
-  prevImage(current){
-    dispatch(prevImage(current))
-  },
-  localSlider(isLocal){
-    dispatch(localSlider(isLocal))
+  localSlider(isLocal, current){
+    dispatch(localSlider(isLocal, current))
   }
 })
 

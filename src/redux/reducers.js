@@ -15,7 +15,8 @@ export default (state = [], action) => {
         }
         case actionTypes.SET_IS_LOCAL: {
             return Object.assign({},state, {
-                isLocal: action.isLocal
+                isLocal: action.isLocal,
+                current: action.current
             })
         }
         default:
