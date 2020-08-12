@@ -7,13 +7,28 @@ class SliderWrapp extends React.Component {
 
   
 
-  setCurrent(){
+  setCurrent(t){
+    this.props.setCurrent(t)
+  }
+
+  next(){
     let { current } = this.props
     let count = () => this.props.isLocal?this.props.localImages.length-1:this.props.remoteImages.length-1
     if(current >= count()){
       current = 0
     }else{
       current++
+    }
+    this.props.setCurrent(current)
+  }
+
+  prev(){
+    let { current } = this.props
+    let count = () => this.props.isLocal?this.props.localImages.length-1:this.props.remoteImages.length-1
+    if(current <= 0){
+      current = count()
+    }else{
+      current--
     }
     this.props.setCurrent(current)
   }
@@ -32,9 +47,9 @@ class SliderWrapp extends React.Component {
           <img className="slider__images" src={this.props[this.props.isLocal?'localImages':'remoteImages'][this.props.current]} />
         </div>
         <div className="btn-wrapper">
-          <button onClick={() => this.setCurrent()}>-</button>
+          <button onClick={() => this.prev()}>-</button>
           <button onClick={() => this.localSlider()}>Переход</button>
-          <button onClick={() => this.setCurrent()}>+</button>
+          <button onClick={() => this.next()}>+</button>
         </div>
       </div>
     );
